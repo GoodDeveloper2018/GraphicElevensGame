@@ -1,9 +1,11 @@
 import javax.imageio.ImageIO;
+import javax.swing.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.awt.Rectangle;
+
 
 public class Card {
     private String suit;
@@ -13,7 +15,10 @@ public class Card {
     private boolean show;
     private BufferedImage image;
     private Rectangle cardBox;
+    private ArrayList<Card> deck;
+    private Rectangle cardSection;
     private boolean highlight;
+
 
     public Card(String suit, String value) {
         this.suit = suit;
@@ -25,6 +30,7 @@ public class Card {
         //
         this.image = readImage();
         this.cardBox = new Rectangle(-100, -100, image.getWidth(), image.getHeight());
+        this.cardSection = new Rectangle(-100, -150, image.getWidth(), image.getHeight());
         this.highlight = false;
     }
 

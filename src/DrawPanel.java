@@ -1,6 +1,6 @@
 import java.awt.event.MouseListener;
 import java.awt.event.MouseEvent;
-import javax.swing.JPanel;
+import javax.swing.*;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.Point;
@@ -24,8 +24,15 @@ class DrawPanel extends JPanel implements MouseListener {
         super.paintComponent(g);
         int x = 50;
         int y = 10;
+        JSeparator seperatedSections = new JSeparator();
         for (int i = 0; i < hand.size(); i++) {
             Card c = hand.get(i);
+            if (i == 3  && c.getCardBox().equals(this)) {
+                int sectionalHand = hand.size() / 3;
+                for (int j = 0; j < sectionalHand; j++) {
+                    c.setRectangleLocation(x, y-30);
+                }
+            }
             if (c.getHighlight()) {
                 // represents highlight --> border rect around card
                 g.drawRect(x, y, c.getImage().getWidth(), c.getImage().getHeight());
