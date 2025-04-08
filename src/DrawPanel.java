@@ -22,30 +22,40 @@ class DrawPanel extends JPanel implements MouseListener {
 
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        int x = 50;
-        int y = 10;
+        int x = 50; 
+        int y = 10; 
         JSeparator seperatedSections = new JSeparator();
+        int cardWidth = hand.get(0).getImage().getWidth();
+        int cardHeight = hand.get(0).getImage().getHeight();
+        int gap = 10;
+        int totalWidth = 3 * cardWidth + 2 * gap;
+        int totalHeight = 3 * cardHeight + 2 * gap;
+        int startX = (getWidth() - totalWidth) / 2;
+        int startY = (getHeight() - totalHeight) / 2;
+
         for (int i = 0; i < hand.size(); i++) {
             Card c = hand.get(i);
-            if (i == 3  && c.getCardBox().equals(this)) {
-                int sectionalHand = hand.size() / 3;
-                for (int j = 0; j < sectionalHand; j++) {
-                    c.setRectangleLocation(x, y-30);
-                }
-            }
             if (c.getHighlight()) {
                 // represents highlight --> border rect around card
-                g.drawRect(x, y, c.getImage().getWidth(), c.getImage().getHeight());
+                int row = i / 3;
+                int col = i % 3;
+                int cardX = startX + col * (cardWidth + gap);
+                int cardY = startY + row * (cardHeight + gap);
+                g.drawRect(cardX, cardY, c.getImage().getWidth(), c.getImage().getHeight());
             }
             // establish the location of rect "hitbox"
-            c.setRectangleLocation(x, y);
-            g.drawImage(c.getImage(), x, y, null);
-            x = x + c.getImage().getWidth() + 10;
+            int row = i / 3;
+            int col = i % 3;
+            int cardX = startX + col * (cardWidth + gap);
+            int cardY = startY + row * (cardHeight + gap);
+            c.setRectangleLocation(cardX, cardY);
+            g.drawImage(c.getImage(), cardX, cardY, null);
         }
 
         // Drawing bottom New Cards BUTTON
         g.setFont(new Font("Courier New", Font.BOLD, 20));
-        g.drawString("GET NEW CARDS", 150, 120);
+        button.setLocation(getWidth() - (int)button.getWidth() - 20, 20);
+        g.drawString("GET NEW CARDS", (int)button.getX() + 5, (int)button.getY() + 20);
         g.drawRect((int)button.getX(), (int)button.getY(), (int)button.getWidth(), (int)button.getHeight());
     }
 
@@ -81,8 +91,6 @@ class DrawPanel extends JPanel implements MouseListener {
                 }
             }
         }
-
-
     }
 
     public void mouseReleased(MouseEvent e) { }
