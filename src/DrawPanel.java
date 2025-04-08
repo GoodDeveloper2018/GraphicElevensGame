@@ -1,11 +1,8 @@
+import java.awt.*;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseEvent;
 import javax.swing.*;
-import java.awt.Graphics;
-import java.awt.Rectangle;
-import java.awt.Point;
 import java.util.ArrayList;
-import java.awt.Font;
 
 class DrawPanel extends JPanel implements MouseListener {
 
@@ -15,16 +12,18 @@ class DrawPanel extends JPanel implements MouseListener {
     private Rectangle button;
 
     public DrawPanel() {
-        button = new Rectangle(147, 100, 160, 26);
+        button = new Rectangle(147, 100, 165, 26);
         this.addMouseListener(this);
         hand = Card.buildHand();
     }
 
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        int x = 50; 
-        int y = 10; 
+        int x = 50;
+        int y = 10;
         JSeparator seperatedSections = new JSeparator();
+        JSeparator separator = new JSeparator(SwingConstants.HORIZONTAL);
+        separator.setMaximumSize(new Dimension(Integer.MAX_VALUE, separator.getPreferredSize().height));
         int cardWidth = hand.get(0).getImage().getWidth();
         int cardHeight = hand.get(0).getImage().getHeight();
         int gap = 10;
@@ -32,6 +31,7 @@ class DrawPanel extends JPanel implements MouseListener {
         int totalHeight = 3 * cardHeight + 2 * gap;
         int startX = (getWidth() - totalWidth) / 2;
         int startY = (getHeight() - totalHeight) / 2;
+
 
         for (int i = 0; i < hand.size(); i++) {
             Card c = hand.get(i);
@@ -52,18 +52,20 @@ class DrawPanel extends JPanel implements MouseListener {
             g.drawImage(c.getImage(), cardX, cardY, null);
         }
 
-        // Drawing bottom New Cards BUTTON
+        // Drawing Top Right New Cards && Replace Cards BUTTON(S)
         g.setFont(new Font("Courier New", Font.BOLD, 20));
-        button.setLocation(getWidth() - (int)button.getWidth() - 20, 20);
-        g.drawString("GET NEW CARDS", (int)button.getX() + 5, (int)button.getY() + 20);
+        button.setLocation(155, 80);
+        g.drawString("REPLACE CARDS", 160, 100);
         g.drawRect((int)button.getX(), (int)button.getY(), (int)button.getWidth(), (int)button.getHeight());
+        g.setFont(new Font("Courier New", Font.BOLD, 20));
+        button.setLocation(getWidth() - (int) button.getWidth() - 20, 20);
+        g.drawString("GET NEW CARDS", (int) button.getX() + 5, (int) button.getY() + 20);
+        g.drawRect((int) button.getX(), (int) button.getY(), (int) button.getWidth(), (int) button.getHeight());
     }
 
     public void mousePressed(MouseEvent e) {
         // Getting coordinates of User Click
         Point clicked = e.getPoint();
-        System.out.println(clicked);
-
         // left click
         if (e.getButton() == 1) {
             // if clicked is inside the button rect object

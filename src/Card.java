@@ -110,6 +110,7 @@ public class Card {
     public static ArrayList<Card> buildHand() {
         ArrayList<Card> deck = Card.buildDeck();
         ArrayList<Card> hand = new ArrayList<Card>();
+        int totalCardSize = 52;
         for (int i = 0; i < 9; i++) {
             int r = (int)(Math.random()*deck.size());
             Card c = deck.remove(r);
